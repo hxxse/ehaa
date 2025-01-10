@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가위바위보 게임</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .buttons {
+            margin: 20px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        #scissors-btn { background-color: #f54242; color: white; }
+        #rock-btn { background-color: #4287f5; color: white; }
+        #paper-btn { background-color: #42f54e; color: white; }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>가위바위보 게임</h1>
+    <div class="buttons">
+        <button id="scissors-btn">가위</button>
+        <button id="rock-btn">바위</button>
+        <button id="paper-btn">보</button>
+    </div>
+    <p id="computer-choice">컴퓨터의 선택: </p>
+    <p id="result">결과: </p>
+
+    <script>
+        const choices = ["가위", "바위", "보"];
+        const buttons = {
+            "scissors-btn": "가위",
+            "rock-btn": "바위",
+            "paper-btn": "보"
+        };
+
+        const computerChoiceElement = document.getElementById("computer-choice");
+        const resultElement = document.getElementById("result");
+
+        function determineWinner(userChoice, computerChoice) {
+            if (userChoice === computerChoice) {
+                return "무승부!";
+            } else if (
+                (userChoice === "가위" && computerChoice === "보") ||
+                (userChoice === "바위" && computerChoice === "가위") ||
+                (userChoice === "보" && computerChoice === "바위")
+            ) {
+                return "승리!";
+            } else {
+                return "패배!";
+            }
+        }
+
+        function playGame(userChoice) {
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            computerChoiceElement.textContent = `컴퓨터의 선택: ${computerChoice}`;
+            const result = determineWinner(userChoice, computerChoice);
+            resultElement.textContent = `결과: ${result}`;
+        }
+
+        Object.keys(buttons).forEach(buttonId => {
+            document.getElementById(buttonId).addEventListener("click", () => {
+                playGame(buttons[buttonId]);
+            });
+        });
+    </script>
+</body>
+</html>
